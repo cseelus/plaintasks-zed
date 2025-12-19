@@ -1,0 +1,13 @@
+# Node
+node_modules/
+
+# Build artifacts
+target/
+*.wasm
+
+# OS files
+.DS_Store
+
+# Editor
+.vscode/
+*.swp

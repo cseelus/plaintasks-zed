@@ -1,0 +1,11 @@
+id = "todo-plus"
+name = "Todo+"
+version = "0.1.0"
+schema_version = 1
+authors = ["Chris <chris@example.com>"]
+description = "Manage todo lists with ease. Syntax highlighting for .todo files with support for projects, tags, and task states."
+repository = "https://github.com/example/zed-todo-plus"
+
+[grammars.todo]
+repository = "file:///Users/chris/Developer/vscode-todo-plus/plaintasks_zed/grammars/tree-sitter-todo"
+rev = "d0601b8"

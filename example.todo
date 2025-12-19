@@ -1,0 +1,20 @@
+Todo+ Extension:
+  ☐ Test syntax highlighting @today
+  ☐ Verify project navigation works @high
+  ☐ Check tag highlighting @low
+  ✔ Create Tree-sitter grammar @done(25-01-18 14:30)
+  ✘ Old approach with TextMate @cancelled(25-01-18 10:00)
+
+Features:
+  ☐ Add *bold* and _italic_ support
+  ☐ Test `code` formatting
+  ☐ Time estimate feature @est(2h)
+
+  This is a comment line without any symbol.
+
+  Sub Feature:
+    ☐ Nested task example @critical
+
+Archive:
+  ✔ Initial setup @done(25-01-17 09:00)
+  ✔ Research Zed extension API @done(25-01-17 12:00)

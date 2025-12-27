@@ -7,5 +7,5 @@ description = "Manage todo lists with ease. Syntax highlighting for .todo files 
 repository = "https://github.com/example/zed-todo-plus"
 
 [grammars.todo]
-repository = "file:///Users/chris/Developer/tree-sitter-todo"
-rev = "d0601b8"
+repository = "file:///Users/chris/Developer/vscode-todo-plus/plaintasks_zed/grammars/todo"
+rev = "97e70e19dc24803cc612829c8d6bfebf960170b9"

@@ -1,7 +1,8 @@
 ; Indent after projects
-(project) @indent
+(project_line) @indent
 
 ; Maintain indentation for todos
-(todo_pending) @indent
-(todo_done) @indent
-(todo_cancelled) @indent
+(todo_line) @indent
+
+; Maintain indentation for comment lines
+(comment_line) @indent

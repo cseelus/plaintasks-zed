@@ -1,20 +1,26 @@
-; Projects - heading style
-(project) @markup.heading
-(project_name) @markup.heading
+; Projects - heading style (bold)
+(project_label) @markup.heading.1
 
 ; Pending todos
-(pending_symbol) @punctuation.special
+(todo_line) @text
 
-; Done todos - muted appearance
-(done_symbol) @string.special
-(todo_done (task_content) @comment)
+; Todo symbols with specific colors
+(todo_symbol) @punctuation.special
 
-; Cancelled todos
-(cancelled_symbol) @constant
-(todo_cancelled (task_content) @comment)
+; Completed tasks - green symbol
+((todo_symbol) @string
+ (#eq? @todo_symbol "✔"))
+
+; Cancelled tasks - red symbol
+((todo_symbol) @keyword.operator
+ (#eq? @todo_symbol "✘"))
+
+; Task content and text
+(task_content) @text
+(text) @text
 
 ; Tags
-(tag "@" @punctuation.special)
+(tag) @text
 (tag_name) @attribute
 (tag_value) @string
 
@@ -32,10 +38,5 @@
 ((tag_name) @type.builtin
  (#any-of? @type.builtin "created" "started" "done" "cancelled" "lasted" "est"))
 
-; Formatting
-(formatted_bold) @markup.bold
-(formatted_italic) @markup.italic
-(formatted_code) @markup.raw
-
 ; Comments
-(comment_text) @comment
+(comment_line) @comment

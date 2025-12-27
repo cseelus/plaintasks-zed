@@ -5,7 +5,3 @@ schema_version = 1
 authors = ["Chris <chris@example.com>"]
 description = "Manage todo lists with ease. Syntax highlighting for .todo files with support for projects, tags, and task states."
 repository = "https://github.com/example/zed-todo-plus"
-
-[grammars.todo]
-repository = "file:///Users/chris/Developer/plaintasks_zed/tree-sitter-todo"
-rev = "e7945753c41587d4f9b095d442fc4ba03a777506"

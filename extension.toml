@@ -1,11 +1,11 @@
-id = "todo-plus"
-name = "Todo+"
+id = "plaintasks"
+name = "PlainTasks"
 version = "0.1.0"
 schema_version = 1
-authors = ["Chris <chris@example.com>"]
-description = "Manage todo lists with ease. Syntax highlighting for .todo files with support for projects, tags, and task states."
-repository = "https://github.com/example/zed-todo-plus"
+authors = ["Chris Seelus <chris@imeos.com>"]
+description = "Syntax highlighting for todo/task files with support for projects, tags, and task states (pending, done, cancelled)."
+repository = "https://github.com/cseelus/plaintasks-zed"
 
 [grammars.todo]
-repository = "file:///Users/chris/Developer/plaintasks_zed/grammars/todo"
-rev = "10bbf966baf79ae52dc34bd147f011572be1e10a"
+repository = "https://github.com/cseelus/tree-sitter-todo"
+rev = "c831335321667e22912ac2d5e4e2fab493d55799"

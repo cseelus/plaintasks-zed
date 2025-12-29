@@ -1,15 +1,19 @@
-# Todo+ for Zed
+# PlainTasks for Zed
 
-A Zed extension for managing todo lists with ease. Based on [Todo+](https://github.com/fabiospampinato/vscode-todo-plus) for VSCode and [PlainTasks](https://github.com/aziz/PlainTasks) for Sublime Text.
+A Zed extension for managing todo lists with syntax highlighting. Inspired by [Todo+](https://github.com/fabiospampinato/vscode-todo-plus) for VSCode and [PlainTasks](https://github.com/aziz/PlainTasks) for Sublime Text.
 
 ## Features
 
 - Syntax highlighting for `.todo`, `.tasks`, and `.taskpaper` files
-- Project headers with `:` suffix
+- Project headers (lines ending with `:`) displayed in bold
 - Task states: pending (`☐`), done (`✔`), cancelled (`✘`)
-- Tag support (`@tag` and `@tag(value)`)
-- Markdown-style formatting (*bold*, _italic_, `code`)
-- Project outline navigation
+- Tag support with special colors for priority tags (`@critical`, `@high`, `@today`, `@low`)
+- Time-related tags (`@done(timestamp)`, `@cancelled(timestamp)`, `@est(duration)`)
+- Comments displayed in italic
+
+## Screenshot
+
+![PlainTasks screenshot](https://raw.githubusercontent.com/cseelus/plaintasks-zed/main/screenshot.png)
 
 ## File Format
 
@@ -25,7 +29,7 @@ Project Name:
     ☐ Nested task @high
 
 Archive:
-  ✔ Old completed task
+  ✔ Old completed task @done(25-01-17 09:00)
 ```
 
 ## Supported File Extensions
@@ -34,9 +38,30 @@ Archive:
 - `.task`, `.tasks`
 - `.taskpaper`
 
-## Keybindings (Vim Mode)
+## Installation
 
-Add to your `keymap.json`:
+Search for "PlainTasks" in the Zed extensions panel, or install via the command line:
+
+```bash
+zed --install-extension plaintasks
+```
+
+## Keybindings
+
+You can add custom keybindings for quick task entry. Add to your `keymap.json`:
+
+```json
+[
+  {
+    "context": "Editor && language == todo",
+    "bindings": {
+      "alt-enter": ["workspace::SendKeystrokes", "o ☐ space"]
+    }
+  }
+]
+```
+
+### Vim Mode
 
 ```json
 [
@@ -49,9 +74,11 @@ Add to your `keymap.json`:
 ]
 ```
 
-## Development
+## Roadmap
 
-This extension is under active development. Language Server features (toggle done/cancelled, archive) coming soon.
+- [ ] Language Server for toggle actions (mark done/cancelled)
+- [ ] Archive functionality
+- [ ] Tag autocompletion
 
 ## License
 

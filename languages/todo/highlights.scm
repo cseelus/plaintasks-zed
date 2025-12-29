@@ -1,38 +1,35 @@
-; Projects
-(project_name) @markup.heading
+; Projects - bold headings (using title + emphasis.strong for bold)
+(project_name) @title
+(project_name) @emphasis.strong
 
-; Symbols
-(pending_symbol) @punctuation.special
-(done_symbol) @string.special
-(cancelled_symbol) @keyword.operator
+; Task Symbols
+(pending_symbol) @function
+(done_symbol) @string
+(cancelled_symbol) @keyword.exception
 
-; Tags
-(tag) @tag
+; Gray out completed/cancelled task text
+(todo_done (task_content) @comment)
+(todo_cancelled (task_content) @comment)
 
-; Comments
-(comment) @comment
-
-; Text
-(text) @text
-
-; Tags
-(tag) @text
-(tag_name) @attribute
+; Tags - base styling
+(tag_name) @property
 (tag_value) @string
 
-; Special priority tags
-((tag_name) @keyword.exception
- (#any-of? @keyword.exception "critical" "high" "important"))
+; Special priority tags (high priority - red/warning colors)
+((tag_name) @keyword
+ (#any-of? @keyword "critical" "high" "important"))
 
-((tag_name) @hint
- (#any-of? @hint "low" "maybe" "someday"))
+; Low priority tags (muted)
+((tag_name) @comment.doc
+ (#any-of? @comment.doc "low" "maybe" "someday"))
 
-((tag_name) @keyword.modifier
- (#eq? @keyword.modifier "today"))
+; Today tag (distinct color)
+((tag_name) @constant
+ (#eq? @constant "today"))
 
 ; Time-related tags
-((tag_name) @type.builtin
- (#any-of? @type.builtin "created" "started" "done" "cancelled" "lasted" "est"))
+((tag_name) @type
+ (#any-of? @type "created" "started" "done" "cancelled" "lasted" "est" "medium"))
 
-; Comments
-(comment) @comment
+; Comments - italic
+(comment) @emphasis

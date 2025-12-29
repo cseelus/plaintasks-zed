@@ -1,2 +1,2 @@
 ; Show projects in symbol outline
-(project_line (project_label) @name) @item
+(project (project_name) @name) @item

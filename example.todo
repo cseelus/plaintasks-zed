@@ -1,31 +1,35 @@
-Passkey support:
-✔ Rename 'Login' to 'Anmelden'
-✔ Improve passkey login loader alignment (and color)
-☐ Fix no error msg for blocked IP with normal login
-✔ Use passkey icon and password icon for login buttons (from Expo icons)?
-✔ Test reset password (API was fixed to prevent user enumeration)
-✘ Fix login bg image not immediately showing on app start
+PlainTasks for Zed:
+  ☐ Syntax highlighting for .todo files @today
+  ☐ Support for projects, tags, and task states
+  ✔ Tree-sitter grammar implementation @done(25-01-18 14:30)
+  ✔ Publish to GitHub @done(25-01-30 00:45)
 
-Todo+ Extension:
-  ☐ Test syntax highlighting @today
-  ☐ Verify project navigation works @low
-  ☐ Some other thing @medium
-  ☐ Yet another thing @medium
-  ☐ More of it @high
-  ☐ Check tag highlighting @low
-  ✔ Create Tree-sitter grammar @done(25-01-18 14:30)
-  ✘ Old approach with TextMate @cancelled(25-01-18 10:00)
+Priority Tags:
+  ☐ Critical bug in production @critical
+  ☐ Review pull request @high
+  ☐ Update documentation @medium
+  ☐ Refactor old module @low
 
-Features:
-  ☐ Add *bold* and _italic_ support
-  ☐ Test `code` formatting
-  ☐ Time estimate feature @est(2h)
+Time Tracking:
+  ☐ Design new landing page @est(4h)
+  ☐ Write blog post @est(2h)
+  ✔ Setup CI/CD pipeline @done(25-01-28 16:00) @lasted(3h)
 
-  This is a comment line without any symbol.
+  Comments are displayed in italic style.
+  Use them for notes and additional context.
 
-  Sub Feature:
-    ☐ Nested task example @critical
+Nested Projects:
+  Frontend:
+    ☐ Implement dark mode @high
+    ☐ Add keyboard shortcuts @medium
+    ✘ Use legacy framework @cancelled(25-01-20 09:00)
+
+  Backend:
+    ☐ Optimize database queries @critical
+    ☐ Add rate limiting @medium
 
 Archive:
-  ✔ Initial setup @done(25-01-17 09:00)
-  ✔ Research Zed extension API @done(25-01-17 12:00)
+  ✔ Initial project setup @done(25-01-15 10:00)
+  ✔ Research Zed extension API @done(25-01-16 14:30)
+  ✔ Create Tree-sitter grammar @done(25-01-18 14:30)
+  ✘ TextMate grammar approach @cancelled(25-01-17 11:00)

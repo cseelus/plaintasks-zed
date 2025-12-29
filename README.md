@@ -13,7 +13,7 @@ A Zed extension for managing todo lists with syntax highlighting. Inspired by [T
 
 ## Screenshot
 
-![PlainTasks screenshot](https://raw.githubusercontent.com/cseelus/plaintasks-zed/main/screenshot.png)
+![PlainTasks screenshot](https://github.com/cseelus/plaintasks-zed/blob/main/screenshot.png)
 
 ## File Format
 

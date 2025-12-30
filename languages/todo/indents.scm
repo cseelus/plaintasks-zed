@@ -6,5 +6,5 @@
 (todo_done) @indent
 (todo_cancelled) @indent
 
-; Maintain indentation for comment lines
-(comment) @indent
+; Maintain indentation for note lines
+(note) @indent

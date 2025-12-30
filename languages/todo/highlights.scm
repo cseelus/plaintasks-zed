@@ -31,5 +31,5 @@
 ((tag_name) @type
  (#any-of? @type "created" "started" "done" "cancelled" "lasted" "est" "medium"))
 
-; Comments - italic
-(comment) @emphasis
+; Notes - muted gray for plain text descriptions
+(note) @comment.doc

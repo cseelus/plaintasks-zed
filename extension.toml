@@ -8,4 +8,4 @@ repository = "https://github.com/cseelus/plaintasks-zed"
 
 [grammars.todo]
 repository = "https://github.com/cseelus/tree-sitter-todo"
-rev = "83fe1310eac7cc84880bb0d3227e621deda46cab"
+rev = "b4c615b8a8db36b4ff87bf84b09c054914380dea"

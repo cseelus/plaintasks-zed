@@ -1,6 +1,7 @@
 ; Projects - bold headings (using title + emphasis.strong for bold)
-(project_name) @title
-(project_name) @emphasis.strong
+; Only style project_name when it's actually in a project node, not in ERROR nodes
+(project (project_name) @title)
+(project (project_name) @emphasis.strong)
 
 ; Task Symbols
 (pending_symbol) @function
@@ -30,6 +31,3 @@
 ; Time-related tags
 ((tag_name) @type
  (#any-of? @type "created" "started" "done" "cancelled" "lasted" "est" "medium"))
-
-; Notes - muted gray for plain text descriptions
-(note) @comment.doc

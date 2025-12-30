@@ -999,5 +999,35 @@ This would automatically apply "Mark as Done" on pending todos or "Revert to Pen
 
 ---
 
+## Appendix C: Technical Notes
+
+### Grammar Parsing and ERROR Nodes
+
+**Issue**: Normal text lines (lines without task symbols or colons) may be parsed as ERROR nodes by tree-sitter.
+
+**Why This Happens**:
+When tree-sitter encounters a line like " this is just some normal text", it attempts to match grammar rules in precedence order. The `project` rule (prec 2) has high precedence, so tree-sitter tries it first. The `project_name` regex `/[^ \t\n\r☐✔✘:][^\n\r:]*/` matches the text, but the rule then fails because there's no required `:` at the end. This partial match creates an ERROR node containing the `project_name` node.
+
+**Why This Isn't a Problem**:
+1. **Correct Display**: By scoping highlight captures to only style `project_name` when inside a valid `project` node (not ERROR nodes), the text displays correctly:
+   ```scheme
+   ; Only style project_name when it's actually in a project node
+   (project (project_name) @title)
+   (project (project_name) @emphasis.strong)
+   ```
+
+2. **Fallback Still Works**: The `note` rule (prec -1) acts as a fallback and will eventually match the line.
+
+3. **No User Impact**: ERROR nodes are internal to the parse tree. Users don't see "ERROR" - they just see properly styled (or unstyled) text.
+
+**Grammar Structure**:
+- `project_name` includes the colon: `/[^ \t\n\r☐✔✘:][^\n\r:]*:/`
+- `project` rule: `seq(optional($._indent), $.project_name, optional(tags), ...)`
+- Note text is inline and anonymous in the `note` rule (no named node to style)
+
+This approach is pragmatic and works well in practice. Alternative solutions (lookahead assertions, grammar restructuring) would be more complex without providing additional benefits.
+
+---
+
 *Document updated: 2025-01-18*
 *Simplified scope with Vim mode support*

@@ -4,3 +4,5 @@ path_suffixes = ["todo", "todos", "task", "tasks", "taskpaper"]
 line_comments = ["# "]
 tab_size = 2
 hard_tabs = false
+
+[language_servers.plaintasks-lsp]

@@ -1,21 +1,90 @@
 # PlainTasks for Zed
 
-A Zed extension for managing todo lists with syntax highlighting. Inspired by [Todo+](https://github.com/fabiospampinato/vscode-todo-plus) for VSCode and [PlainTasks](https://github.com/aziz/PlainTasks) for Sublime Text.
+A Zed extension for managing todo lists with syntax highlighting and interactive task management. Inspired by [Todo+](https://github.com/fabiospampinato/vscode-todo-plus) for VSCode and [PlainTasks](https://github.com/aziz/PlainTasks) for Sublime Text.
 
 ## Features
 
-- Syntax highlighting for `.todo`, `.tasks`, and `.taskpaper` files
-- Project headers (lines ending with `:`) displayed in bold
-- Task states: pending (`☐`), done (`✔`), cancelled (`✘`)
-- Tag support with special colors for priority tags (`@critical`, `@high`, `@today`, `@low`)
-- Time-related tags (`@done(timestamp)`, `@cancelled(timestamp)`, `@est(duration)`)
-- Comments displayed in italic
+- ✅ **Syntax highlighting** for `.todo`, `.tasks`, and `.taskpaper` files
+- ✅ **Interactive task management** via Language Server Protocol
+- ✅ **Code actions** to toggle task states (Done/Cancelled/Pending)
+- ✅ **Automatic timestamps** when marking tasks complete
+- ✅ **Tag completion** - type `@` to see suggestions
+- ✅ **Project outline** - navigate between projects via symbol picker
+- ✅ **Priority tags** with special colors (`@critical`, `@high`, `@today`, `@low`)
 
-## Screenshot
+## Quick Start
 
-![PlainTasks screenshot](https://github.com/cseelus/plaintasks-zed/blob/main/screenshot.png)
+### 1. Install the Extension
 
-## File Format
+Search for "PlainTasks" in the Zed extensions panel (`Cmd+Shift+X`).
+
+### 2. Set Up Keybindings (Required!)
+
+**Zed extensions cannot automatically add keybindings** - you need to configure them manually.
+
+Open your keymap (`Cmd+K, Cmd+S` or *Zed → Settings → Open Keymap*) and add:
+
+#### Standard Keybindings
+
+```json
+[
+  {
+    "context": "Editor && language == Todo",
+    "bindings": {
+      "alt-d": "editor::ToggleCodeActions",
+      "alt-c": "editor::ToggleCodeActions"
+    }
+  }
+]
+```
+
+- **Alt+D**: Toggle task (Done/Pending)
+- **Alt+C**: Toggle task or Mark as Cancelled
+
+#### Vim Mode Keybindings
+
+```json
+[
+  {
+    "context": "Editor && language == Todo && VimControl && !VimWaiting && !menu",
+    "bindings": {
+      "+": ["workspace::SendKeystrokes", "o ☐ escape"],
+      "=": "editor::ToggleCodeActions",
+      "ctrl-m": "editor::ToggleCodeActions"
+    }
+  }
+]
+```
+
+- **`+`** (normal mode): Create new task
+- **`=`** (normal mode): Toggle Done/Pending
+- **`Ctrl+M`** (normal mode): Mark as Cancelled
+
+> 💡 **Tip**: The LSP automatically applies the most relevant action based on context, so pressing `=` directly toggles tasks without showing a menu!
+
+For more keybinding options, see [KEYBINDINGS.md](KEYBINDINGS.md).
+
+## Usage
+
+### Task Management
+
+Put your cursor on a task and use code actions (or your configured keybindings):
+
+| Current State | Action | Result |
+|--------------|--------|--------|
+| `☐ Task` | Mark as Done | `✔ Task @done(25-12-31 00:30)` |
+| `☐ Task` | Mark as Cancelled | `✘ Task @cancelled(25-12-31 00:30)` |
+| `✔ Task @done(...)` | Revert to Pending | `☐ Task` |
+| `✘ Task @cancelled(...)` | Revert to Pending | `☐ Task` |
+
+### Tag Completion
+
+Type `@` and you'll see suggestions for:
+- Common tags: `@today`, `@high`, `@medium`, `@low`, `@critical`
+- Time tags: `@done`, `@cancelled`, `@started`, `@est`, `@lasted`
+- Any tags you've already used in the document
+
+### File Format
 
 ```
 Project Name:
@@ -26,11 +95,15 @@ Project Name:
   Notes and comments without a symbol
   
   Sub Project:
-    ☐ Nested task @high
+    ☐ Nested task @high @est(2h)
 
 Archive:
   ✔ Old completed task @done(25-01-17 09:00)
 ```
+
+## Screenshot
+
+![PlainTasks screenshot](https://github.com/cseelus/plaintasks-zed/blob/main/screenshot.png)
 
 ## Supported File Extensions
 
@@ -38,48 +111,69 @@ Archive:
 - `.task`, `.tasks`
 - `.taskpaper`
 
-## Installation
+## How It Works
 
-Search for "PlainTasks" in the Zed extensions panel, or install via the command line:
+PlainTasks uses two components:
+
+1. **Tree-sitter Grammar**: Provides syntax highlighting and project outline
+2. **Language Server (LSP)**: Provides interactive features like code actions and tag completion
+
+The LSP server (`plaintasks-lsp`) runs automatically when you open a `.todo` file.
+
+## Development
+
+### Building the LSP Server
+
+The LSP server is in the `lsp/` directory:
 
 ```bash
-zed --install-extension plaintasks
+cd lsp
+cargo build --release
+cp target/release/plaintasks-lsp ~/.cargo/bin/
 ```
 
-## Keybindings
+### Installing as Dev Extension
 
-You can add custom keybindings for quick task entry. Add to your `keymap.json`:
-
-```json
-[
-  {
-    "context": "Editor && language == todo",
-    "bindings": {
-      "alt-enter": ["workspace::SendKeystrokes", "o ☐ space"]
-    }
-  }
-]
+```bash
+# In Zed: Extensions → Install Dev Extension → Select this directory
 ```
 
-### Vim Mode
+## Troubleshooting
 
-```json
-[
-  {
-    "context": "Editor && language == todo && VimControl && !VimWaiting && !menu",
-    "bindings": {
-      "+": ["workspace::SendKeystrokes", "o ☐ space"]
-    }
-  }
-]
-```
+**Code actions not working?**
+- Make sure you've added keybindings to your `keymap.json`
+- Check that the file has a `.todo` extension
+- Try restarting Zed (`Cmd+Q` and reopen)
+
+**Tag completion not showing?**
+- Type `@` and wait a moment
+- Check if Copilot or other completion providers are overriding it
+- Try pressing `Ctrl+Space` to manually trigger completion
+
+**LSP not starting?**
+- Check Zed's logs: `tail -f ~/Library/Logs/Zed/Zed.log | grep plaintasks`
+- Reinstall the extension
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit issues or pull requests.
 
 ## Roadmap
 
-- [ ] Language Server for toggle actions (mark done/cancelled)
-- [ ] Archive functionality
-- [ ] Tag autocompletion
+- [x] Tree-sitter grammar with syntax highlighting
+- [x] Language Server Protocol implementation
+- [x] Code actions for task state management
+- [x] Tag completion
+- [x] Project outline support
+- [ ] Archive functionality (move completed tasks)
+- [ ] Create new task command
+- [ ] Statistics view (task counts, time tracking)
 
 ## License
 
 MIT
+
+## Acknowledgments
+
+- Inspired by [PlainTasks](https://github.com/aziz/PlainTasks) for Sublime Text
+- Based on [Todo+](https://github.com/fabiospampinato/vscode-todo-plus) for VSCode

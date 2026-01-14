@@ -157,6 +157,7 @@ impl LanguageServer for Backend {
                         actions.push(CodeActionOrCommand::CodeAction(CodeAction {
                             title: "Mark as Done".to_string(),
                             kind: Some(CodeActionKind::QUICKFIX),
+                            is_preferred: Some(true),
                             edit: Some(WorkspaceEdit {
                                 changes: Some(HashMap::from([(
                                     params.text_document.uri.clone(),
@@ -212,6 +213,7 @@ impl LanguageServer for Backend {
                         actions.push(CodeActionOrCommand::CodeAction(CodeAction {
                             title: "Revert to Pending".to_string(),
                             kind: Some(CodeActionKind::QUICKFIX),
+                            is_preferred: Some(true),
                             edit: Some(WorkspaceEdit {
                                 changes: Some(HashMap::from([(
                                     params.text_document.uri.clone(),
@@ -241,6 +243,7 @@ impl LanguageServer for Backend {
                         actions.push(CodeActionOrCommand::CodeAction(CodeAction {
                             title: "Revert to Pending".to_string(),
                             kind: Some(CodeActionKind::QUICKFIX),
+                            is_preferred: Some(true),
                             edit: Some(WorkspaceEdit {
                                 changes: Some(HashMap::from([(
                                     params.text_document.uri.clone(),

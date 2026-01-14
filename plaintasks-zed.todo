@@ -1,2 +1,7 @@
+☐ Add code action to create new item
+☐ Add code action to archive all finished items
+☐ Add code action to sort current block of todo items, so finished items are listed first
 ☐ Make icons configurable
 ☐ Make colors optional
+☐ Implement key bindings (when Zed supports them)
+☐ Enable indentation for wrapped lines

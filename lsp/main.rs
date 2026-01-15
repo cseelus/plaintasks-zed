@@ -262,6 +262,74 @@ impl LanguageServer for Backend {
                     }
                 }
 
+                // Check if line is NOT a todo and NOT a project - offer to convert
+                let is_todo = PENDING_PATTERN.is_match(&line) ||
+                              DONE_PATTERN.is_match(&line) ||
+                              CANCELLED_PATTERN.is_match(&line);
+                let is_project = line.trim_end().ends_with(':');
+
+                if !is_todo && !is_project {
+                    // Extract current indentation
+                    let indent = line.chars()
+                        .take_while(|c| c.is_whitespace())
+                        .collect::<String>();
+
+                    // Get content after indentation
+                    let content = line.trim_start();
+
+                    // Create new line with todo symbol
+                    let new_line = if content.is_empty() {
+                        format!("{}☐ ", indent)
+                    } else {
+                        format!("{}☐ {}", indent, content)
+                    };
+
+                    actions.push(CodeActionOrCommand::CodeAction(CodeAction {
+                        title: "Convert to Todo Item".to_string(),
+                        kind: Some(CodeActionKind::REFACTOR),
+                        is_preferred: Some(true),
+                        edit: Some(WorkspaceEdit {
+                            changes: Some(HashMap::from([(
+                                params.text_document.uri.clone(),
+                                vec![TextEdit {
+                                    range: Range {
+                                        start: Position { line: position.line, character: 0 },
+                                        end: Position { line: position.line, character: u32::MAX },
+                                    },
+                                    new_text: new_line,
+                                }],
+                            )])),
+                            ..Default::default()
+                        }),
+                        ..Default::default()
+                    }));
+                }
+
+                // Always offer "Insert New Todo Below" action
+                // Extract indentation from current line to maintain nesting
+                let indent = line.chars()
+                    .take_while(|c| c.is_whitespace())
+                    .collect::<String>();
+
+                actions.push(CodeActionOrCommand::CodeAction(CodeAction {
+                    title: "Insert New Todo Below".to_string(),
+                    kind: Some(CodeActionKind::REFACTOR),
+                    edit: Some(WorkspaceEdit {
+                        changes: Some(HashMap::from([(
+                            params.text_document.uri.clone(),
+                            vec![TextEdit {
+                                range: Range {
+                                    start: Position { line: position.line + 1, character: 0 },
+                                    end: Position { line: position.line + 1, character: 0 },
+                                },
+                                new_text: format!("{}☐ \n", indent),
+                            }],
+                        )])),
+                        ..Default::default()
+                    }),
+                    ..Default::default()
+                }));
+
                 if !actions.is_empty() {
                     return Ok(Some(actions));
                 }

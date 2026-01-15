@@ -311,32 +311,19 @@ impl LanguageServer for Backend {
                     .take_while(|c| c.is_whitespace())
                     .collect::<String>();
 
-                // Calculate cursor position: indent length + "☐ " (3 chars including the space)
-                let cursor_char = (indent.len() + 2) as u32;
-
                 actions.push(CodeActionOrCommand::CodeAction(CodeAction {
                     title: "Insert new Todo item below".to_string(),
                     kind: Some(CodeActionKind::REFACTOR),
                     edit: Some(WorkspaceEdit {
                         changes: Some(HashMap::from([(
                             params.text_document.uri.clone(),
-                            vec![
-                                TextEdit {
-                                    range: Range {
-                                        start: Position { line: position.line + 1, character: 0 },
-                                        end: Position { line: position.line + 1, character: 0 },
-                                    },
-                                    new_text: format!("{}☐ \n", indent),
+                            vec![TextEdit {
+                                range: Range {
+                                    start: Position { line: position.line + 1, character: 0 },
+                                    end: Position { line: position.line + 1, character: 0 },
                                 },
-                                // Add a second empty edit at the desired cursor position
-                                TextEdit {
-                                    range: Range {
-                                        start: Position { line: position.line + 1, character: cursor_char },
-                                        end: Position { line: position.line + 1, character: cursor_char },
-                                    },
-                                    new_text: String::new(),
-                                },
-                            ],
+                                new_text: format!("{}☐ \n", indent),
+                            }],
                         )])),
                         ..Default::default()
                     }),

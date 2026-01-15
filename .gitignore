@@ -4,6 +4,8 @@ node_modules/
 # Build artifacts
 target/
 *.wasm
+Cargo.lock
+lsp/Cargo.lock
 
 # OS files
 .DS_Store
@@ -11,6 +13,12 @@ target/
 # Editor
 .vscode/
 *.swp
+.claude/
+
+# Development/test files
+plan.md
+plaintasks-zed.todo
+test-*.todo
 
 # Grammar submodule (fetched from separate repo)
 grammars/

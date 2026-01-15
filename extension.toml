@@ -3,7 +3,7 @@ name = "PlainTasks"
 version = "0.1.0"
 schema_version = 1
 authors = ["Chris Seelus <chris@imeos.com>"]
-description = "Syntax highlighting for todo/task files with support for projects, tags, and task states (pending, done, cancelled)."
+description = "Todo list management with syntax highlighting, interactive code actions to toggle task states, automatic timestamps, and tag completion."
 repository = "https://github.com/cseelus/plaintasks-zed"
 
 [grammars.todo]

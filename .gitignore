@@ -4,6 +4,7 @@ node_modules/
 # Build artifacts
 target/
 *.wasm
+!extension.wasm
 Cargo.lock
 lsp/Cargo.lock
 

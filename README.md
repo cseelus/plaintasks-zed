@@ -122,21 +122,63 @@ The LSP server (`plaintasks-lsp`) runs automatically when you open a `.todo` fil
 
 ## Development
 
-### Building the LSP Server
+### Prerequisites
 
-The LSP server is in the `lsp/` directory:
+- Rust installed via [rustup](https://rustup.rs/) (required by Zed for extension development)
+- The `wasm32-wasip1` target for building the extension
+
+### Quick Start
 
 ```bash
+# 1. Setup (one-time)
+make setup
+
+# 2. Build and install LSP server
+make install-lsp
+
+# 3. Build extension for development
+make dev-extension
+
+# 4. Install in Zed
+# Open Zed → Extensions (Cmd+Shift+X) → Install Dev Extension → Select this directory
+```
+
+### Build Commands
+
+```bash
+make help              # Show all available commands
+make setup             # Install Rust targets and check dependencies
+make build             # Build extension (debug) + LSP server
+make build-release     # Build extension (release) + LSP server
+make install-lsp       # Build and install LSP to ~/.cargo/bin/
+make dev-extension     # Build everything for dev extension use
+make clean             # Remove all build artifacts
+```
+
+### Manual Building
+
+If you prefer not to use the Makefile:
+
+```bash
+# Install the wasm32-wasip1 target
+rustup target add wasm32-wasip1
+
+# Build the extension
+cargo build --release --target wasm32-wasip1
+ln -sf target/wasm32-wasip1/release/plaintasks.wasm extension.wasm
+
+# Build and install the LSP server
 cd lsp
 cargo build --release
 cp target/release/plaintasks-lsp ~/.cargo/bin/
 ```
 
-### Installing as Dev Extension
+### Project Structure
 
-```bash
-# In Zed: Extensions → Install Dev Extension → Select this directory
-```
+- `src/extension.rs` - Zed extension (WASM component)
+- `lsp/` - Language Server Protocol implementation (native binary)
+- `grammars/todo/` - Tree-sitter grammar (separate repo: [tree-sitter-todo](https://github.com/cseelus/tree-sitter-todo))
+- `languages/todo/` - Language configuration
 
 ## Troubleshooting
 
